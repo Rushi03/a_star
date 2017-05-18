@@ -5,22 +5,27 @@ def a_star(grid, initial, cost, goal, heuristic):
              [0, 1],   # Down
              [-1, 0]]  # Left
 
+    # Showed the squares that have been checked
     checked = [[0 for row in range(len(grid))] for col in range(len(grid[0]))]
     checked[initial[0]][initial[1]] = 1
 
+    # Initialization
     x = initial[0]
     y = initial[1]
     h = heuristic[x][y]
     g = 0
     f = g + h
 
+    # The unchecked squares
     unchecked = [[f, g, h, x, y]]
 
-    quit = False
-    complete = False
-    counter = 0
+    # Boolean statements
+    quit = False        # Quit if square in unchecked cannot expand further
+    complete = False    # Stop when the maze has been completed
+    counter = 0         # Count the moves
 
     while not complete and not quit:
+        # Check expansion of the squares in list unchecked
         if len(unchecked) == 0:
             quit = True
             print "Cannot expand further."
@@ -32,9 +37,11 @@ def a_star(grid, initial, cost, goal, heuristic):
             x = next[3]
             y = next[4]
 
+            # Check if reached goal
             if x == goal[0] and y == goal[1]:
                 complete = True
                 print "Completed."
+            # Pathfinding
             else:
                 for i in range(len(delta)):
                     x_prime = x + delta[i][0]
@@ -51,6 +58,15 @@ def a_star(grid, initial, cost, goal, heuristic):
 
     return checked
 
+
+'''
+Test 1:
+- Personal grid
+- Manual heuristic
+- Even cost for movement
+- Start top left corner
+- Goal bottom right corner
+'''
 
 grid = [[0, 1, 1, 0, 0],
         [0, 1, 1, 1, 0],
